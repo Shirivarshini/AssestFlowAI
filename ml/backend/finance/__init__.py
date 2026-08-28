@@ -1,0 +1,1 @@
+"""Finance / AI Decision Engine module (Member 3 — Features 5-8)."""

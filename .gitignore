@@ -1,0 +1,24 @@
+# Frontend
+node_modules/
+dist/
+.env
+.env.local
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+*.db
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local tooling
+.agents/
+.codex/

@@ -1,0 +1,10 @@
+import { useEffect, useState } from 'react';
+import { getAlerts, updateAlert } from '../services/api';
+import type { Alert } from '../types/api';
+
+export function AlertsPage() {
+  const [alerts, setAlerts] = useState<Alert[]>([]); const [error, setError] = useState('');
+  useEffect(() => { void getAlerts().then(setAlerts).catch((e: Error) => setError(e.message)); }, []);
+  const change = async (id: string, status: 'ACKNOWLEDGED' | 'RESOLVED') => { const updated = await updateAlert(id, status); setAlerts((items) => items.map((item) => item.id === id ? updated : item)); };
+  return <div className="space-y-12"><header><div className="mono text-[var(--color-pale-stone)]">Operational controls</div><h1 className="page-title mt-6">Alert center.</h1><p className="mt-6 max-w-xl text-[var(--color-warm-granite)]">Risk, exposure, evidence, and settlement signals requiring attention.</p></header>{error && <div className="panel p-5 text-[var(--color-signal-orange)]">{error}</div>}<section className="grid gap-4">{alerts.map((alert) => <article key={alert.id} className="panel p-6"><div className="flex flex-col justify-between gap-5 sm:flex-row"><div><div className="mono flex items-center gap-2 text-[var(--color-signal-orange)]"><i className="signal" /> {alert.severity} / {alert.status ?? 'OPEN'}</div><h2 className="mt-5 text-2xl tracking-[-.025em]">{alert.title}</h2><p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--color-warm-granite)]">{alert.message}</p><div className="mono mt-5 text-[var(--color-warm-granite)]">{alert.assetId} / {new Date(alert.createdAt).toLocaleString()}</div></div>{alert.status !== 'RESOLVED' && <div className="flex items-start gap-2"><button className="control mono" onClick={() => void change(alert.id, 'ACKNOWLEDGED')}>Acknowledge</button><button className="control control-light mono" onClick={() => void change(alert.id, 'RESOLVED')}>Resolve</button></div>}</div></article>)}{!alerts.length && !error && <div className="panel p-10 mono text-[var(--color-warm-granite)]">No alerts in this view</div>}</section></div>;
+}

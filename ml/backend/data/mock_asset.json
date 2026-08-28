@@ -1,0 +1,19 @@
+{
+  "asset_id": "AST-1001",
+  "product": "Business Laptop",
+  "company": "ABC Electronics",
+  "stage": "SHIPMENT",
+  "purchase_value": 10000000,
+  "quantity": 900,
+  "condition": "GOOD",
+  "location": "Chennai Port",
+  "shipment_status": "DELAYED",
+  "production_status": "COMPLETED",
+  "buyer_risk": 20,
+  "production_risk": 20,
+  "shipment_risk": 70,
+  "asset_risk": 20,
+  "data_confidence": 0.72,
+  "required_capital": 5000000,
+  "existing_financing": 3000000
+}
