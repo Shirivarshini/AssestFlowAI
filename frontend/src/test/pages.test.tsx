@@ -21,6 +21,18 @@ describe('judge-facing demo pages', () => {
     expect(screen.getByText('Lifecycle telemetry')).toBeInTheDocument();
   });
 
+  it('routes the selected dashboard workflow to its console', async () => {
+    renderPage(<DashboardPage />);
+    expect(await screen.findByRole('link', { name: 'Reconcile sources' })).toHaveAttribute('href', '/reconciliation');
+
+    const finance = screen.getByRole('button', { name: /04 Finance/i });
+    fireEvent.click(finance);
+
+    expect(finance).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('link', { name: 'Review financing' })).toHaveAttribute('href', '/assets/AST-1001/financing');
+    expect(screen.queryByRole('link', { name: 'Reconcile sources' })).not.toBeInTheDocument();
+  });
+
   it('asset detail loads its lifecycle and financing state', async () => {
     renderPage(<AssetDetailPage />);
     expect(await screen.findByText('Lifecycle')).toBeInTheDocument();
